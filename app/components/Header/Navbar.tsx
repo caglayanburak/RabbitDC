@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Environment} from "../enviroment/enviroment";
 
 export const Navbar = () => {
   return (
@@ -14,6 +15,7 @@ export const Navbar = () => {
           <button className="bp3-button bp3-minimal bp3-icon-document">
             Error Queues
           </button>
+          <Environment />
           <span className="bp3-navbar-divider" />
           <button className="bp3-button bp3-minimal bp3-icon-user" />
           <button className="bp3-button bp3-minimal bp3-icon-notifications" />

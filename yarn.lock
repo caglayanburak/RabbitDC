@@ -1417,6 +1417,35 @@
     resize-observer-polyfill "^1.5.1"
     tslib "~1.10.0"
 
+"@blueprintjs/core@^3.28.2":
+  version "3.28.2"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-3.28.2.tgz#b1be8766b78f72d73552d88e9d6c2c5297a17994"
+  integrity sha512-EGl6tByE4ME+ZvhZYr3Idq3T0otL5r6WLRgUEXLVUq8gzmPKSGHfJKPOisMZY9NEsrVUhwfl0c9vA1Wu1B6NsA==
+  dependencies:
+    "@blueprintjs/icons" "^3.18.1"
+    "@types/dom4" "^2.0.1"
+    classnames "^2.2"
+    dom4 "^2.1.5"
+    normalize.css "^8.0.1"
+    popper.js "^1.16.1"
+    react-lifecycles-compat "^3.0.4"
+    react-popper "^1.3.7"
+    react-transition-group "^2.9.0"
+    resize-observer-polyfill "^1.5.1"
+    tslib "~1.10.0"
+
+"@blueprintjs/docs-theme@^3.6.0":
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/docs-theme/-/docs-theme-3.6.1.tgz#ea8f25680734c4b28c53b77ef03494c69928a581"
+  integrity sha512-QTB7sLFz6NhwdKlqC/K7C/Msw+Ls4RBXlUrjCsR14Vspwy8C1cu+pY2+OpmH9oM6bB4x7PvUvk2qJg19zi4UPQ==
+  dependencies:
+    "@blueprintjs/core" "^3.28.2"
+    "@blueprintjs/select" "^3.13.3"
+    "@documentalist/client" "~2.5.0"
+    classnames "^2.2"
+    fuzzaldrin-plus "^0.6.0"
+    tslib "~1.10.0"
+
 "@blueprintjs/icons@^3.16.0":
   version "3.16.0"
   resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.16.0.tgz#902c74a36ff24ad76fa309cca25b6877c2a9c027"
@@ -1433,6 +1462,14 @@
     classnames "^2.2"
     tslib "~1.10.0"
 
+"@blueprintjs/icons@^3.18.1":
+  version "3.18.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/icons/-/icons-3.18.1.tgz#cd41705254b970339b34d0110cadfad1fab08a16"
+  integrity sha512-24FihaUmhjTVr1wIXAdqblMjrnxE3g4Rx46BEERNd5xvfS0yeR/MMICStVTOfUQViWkn9uN4Ghe2SPFlHK/FPA==
+  dependencies:
+    classnames "^2.2"
+    tslib "~1.10.0"
+
 "@blueprintjs/select@^3.13.2":
   version "3.13.2"
   resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.13.2.tgz#45cc1bf50e4cd51d9e99f8b39a071ee4c84c64c3"
@@ -1440,6 +1477,27 @@
   dependencies:
     "@blueprintjs/core" "^3.28.1"
     classnames "^2.2"
+    tslib "~1.10.0"
+
+"@blueprintjs/select@^3.13.3":
+  version "3.13.3"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/select/-/select-3.13.3.tgz#c9ab2a4f4ebfd22019ca27c093bcd955bc54b84f"
+  integrity sha512-glpZB00DO3kv8I5sLNp67nfE+BIYV1QWm2SfEALYZ39ewGDPM0guiUvuZTgF/RCgpNRhKzlNP44Ur7i3VWS8bg==
+  dependencies:
+    "@blueprintjs/core" "^3.28.2"
+    classnames "^2.2"
+    tslib "~1.10.0"
+
+"@blueprintjs/table@^3.8.8":
+  version "3.8.8"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.8.8.tgz#f48263969c2c0facc69be0b3d5b4c74f85a123c1"
+  integrity sha512-kwGCOQxTDFzk0ZWwBss9Rl0DvP4Eo9zi/ZAg+DVkbtCUmiMqodIMVcCSRIhdzzxCdaE2lZOq+Oz7IUp9dsUTBg==
+  dependencies:
+    "@blueprintjs/core" "^3.28.1"
+    classnames "^2.2"
+    lodash "^4.17.15"
+    prop-types "^15.6.0"
+    react-lifecycles-compat "^3.0.4"
     tslib "~1.10.0"
 
 "@cnakazawa/watch@^1.0.3":
@@ -1457,6 +1515,11 @@
   dependencies:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
+
+"@documentalist/client@~2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@documentalist/client/-/client-2.5.0.tgz#d45ec038a45b4b7a603629ba777ed564fa03c29c"
+  integrity sha512-yOB8X6rU4WZbKsBHQVRw578df6goRi/FveSx9NCcYBkNiM4IqNddpfgX5BrG1hUwO1IVTnMVF5tpFka9oFNSVg==
 
 "@electron/get@^1.0.1":
   version "1.7.2"
@@ -7308,6 +7371,11 @@ functions-have-names@^1.2.0:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.1.tgz#a981ac397fa0c9964551402cdc5533d7a4d52f91"
   integrity sha512-j48B/ZI7VKs3sgeI2cZp7WXWmZXu7Iq5pl5/vptV5N2mq+DGFuS/ulaDjtaoLpYzuD6u8UgrUKHfgo7fDTSiBA==
 
+fuzzaldrin-plus@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/fuzzaldrin-plus/-/fuzzaldrin-plus-0.6.0.tgz#832f6489fbe876769459599c914a670ec22947ee"
+  integrity sha1-gy9kifvodnaUWVmckUpnDsIpR+4=
+
 gauge@~2.7.3:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/gauge/-/gauge-2.7.4.tgz#2c03405c7538c39d7eb37b317022e325fb018bf7"
@@ -11390,7 +11458,7 @@ pngjs@^3.3.1:
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
   integrity sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==
 
-popper.js@^1.14.4, popper.js@^1.15.0:
+popper.js@^1.14.4, popper.js@^1.15.0, popper.js@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
   integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -11973,7 +12041,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==

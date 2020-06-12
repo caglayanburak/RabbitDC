@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {Environment} from "../enviroment/enviroment";
+import {Environment} from "../enviroment/Environment";
+import {Button, Menu, MenuDivider, MenuItem, Popover} from "@blueprintjs/core";
+import {Position} from "@blueprintjs/core/lib/esm/common/position";
+import {Link} from "react-router-dom";
+import routes from "../../constants/routes.json";
 
 export const Navbar = () => {
   return (
@@ -19,7 +23,15 @@ export const Navbar = () => {
           <span className="bp3-navbar-divider" />
           <button className="bp3-button bp3-minimal bp3-icon-user" />
           <button className="bp3-button bp3-minimal bp3-icon-notifications" />
-          <button className="bp3-button bp3-minimal bp3-icon-cog" />
+          <Popover content={<Menu>
+              <Link to={routes.EnvironmentEdit}>
+                <MenuItem icon="graph" text="Environments">
+                </MenuItem>
+              </Link>
+
+          </Menu>} position={Position.BOTTOM_LEFT}>
+            <Button className="bp3-button bp3-minimal bp3-icon-cog" />
+          </Popover>
         </div>
       </div>
     </nav>

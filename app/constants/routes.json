@@ -1,5 +1,6 @@
 {
     "HOME": "/",
     "COUNTER": "/counter",
-    "QUEUES": "/queues"
+    "QUEUES": "/queues",
+    "EnvironmentEdit": "/environment-edit"
 }

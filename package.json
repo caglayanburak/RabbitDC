@@ -273,7 +273,9 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^3.26.1",
+    "@blueprintjs/docs-theme": "^3.6.0",
     "@blueprintjs/select": "^3.13.2",
+    "@blueprintjs/table": "^3.8.8",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@hot-loader/react-dom": "^16.13.0",
     "connected-react-router": "^6.8.0",
@@ -328,6 +330,7 @@
   },
   "renovate": {
     "extends": [
-      "bliss"]
-      }
+      "bliss"
+    ]
+  }
 }

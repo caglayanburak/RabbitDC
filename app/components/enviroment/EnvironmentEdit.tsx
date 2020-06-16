@@ -4,19 +4,34 @@ import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
 import {Button, FormGroup, InputGroup} from "@blueprintjs/core";
 import EnvironmentList from "./EnvironmentList";
-import {AppToaster} from "../../toast/toaster";
 
-export default function EnvironmentEdit() {
-  const [environment, setEnvironment] = useState("");
-  const [url, setUrl] = useState("");
+type Props = {
+  add: (payload: any) => void,
+  remove: (payload: any) => void,
+  getAll: () => any,
+  environments: any
+};
+
+export default function EnvironmentEdit({add, remove, getAll, environments}: Props) {
+  const environmentInitalState = "";
+  const urlInitalState = "";
+  const userNameInitalState = "";
+  const passwordInitalState = "";
+  const [environment, setEnvironment] = useState(environmentInitalState);
+  const [url, setUrl] = useState(urlInitalState);
+  const [userName, setUserName] = useState(userNameInitalState);
+  const [password, setPassword] = useState(passwordInitalState);
+
   const saveEnvironment = () => {
-    let environments = JSON.parse(localStorage.getItem("environments"));
-    var env = {name: environment, url: url};
-
-    environments.push(env);
-    localStorage.setItem("environments", JSON.stringify(environments));
-
-    AppToaster.show({message: "Environment added.", icon: "confirm", intent: "success"});
+    let env = {name: environment, url: url, userName: userName, password: password};
+    add(env);
+    clearFields();
+  }
+  const clearFields = () => {
+    setEnvironment("");
+    setUrl(urlInitalState);
+    setUserName(userNameInitalState);
+    setPassword(passwordInitalState);
   }
 
   return (
@@ -31,7 +46,8 @@ export default function EnvironmentEdit() {
         labelInfo="(required)"
         className={`${styles.myClass} bp3-dark`}
       >
-        <InputGroup id="text-input" placeholder="Environment" onChange={e => setEnvironment(e.target.value)}/>
+        <InputGroup id="text-input" placeholder="Environment" value={environment}
+                    onChange={(e: any) => setEnvironment(e.target.value)}/>
       </FormGroup>
 
       <FormGroup
@@ -40,13 +56,33 @@ export default function EnvironmentEdit() {
         labelInfo="(required)"
         className={`${styles.myClass} bp3-dark`}
       >
-        <InputGroup id="text-input" placeholder="Url" onChange={e => {
+        <InputGroup id="text-input" placeholder="Url" value={url} onChange={(e: any) => {
           setUrl(e.target.value)
         }}/>
-        <Button className={styles.saveButton} icon={"saved"} onClick={saveEnvironment}>Save</Button>
       </FormGroup>
 
-      <EnvironmentList/>
+      <FormGroup
+        label="User Name"
+        labelFor="text-input"
+        labelInfo="(required)"
+        className={`${styles.myClass} bp3-dark`}
+      >
+        <InputGroup id="text-input" placeholder="User Name" value={userName}
+                    onChange={(e: any) => setUserName(e.target.value)}/>
+      </FormGroup>
+      <FormGroup
+        label="Password"
+        labelFor="text-input"
+        labelInfo="(required)"
+        className={`${styles.myClass} bp3-dark`}
+      >
+        <InputGroup id="text-input" placeholder="Password" value={password}
+                    onChange={(e: any) => setPassword(e.target.value)}/>
+        <Button className={styles.saveButton} icon={"saved"} onClick={saveEnvironment}>Save</Button>
+
+      </FormGroup>
+
+      <EnvironmentList getAll={getAll} environments={environments?.environments} remove={remove}/>
     </div>
   );
 }

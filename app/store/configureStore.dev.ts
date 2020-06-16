@@ -5,6 +5,7 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
+import * as environmentActions from '../actions/environment';
 import { counterStateType } from '../reducers/types';
 
 declare global {
@@ -51,6 +52,7 @@ const configureStore = (initialState?: counterStateType) => {
   // Redux DevTools Configuration
   const actionCreators = {
     ...counterActions,
+    ...environmentActions,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

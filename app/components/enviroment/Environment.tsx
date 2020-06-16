@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
-import * as constants from '../../constants/constants.json';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
 export const Environment = () => {
   const dispatch = useDispatch();
@@ -12,18 +11,22 @@ export const Environment = () => {
     })
   }
 
-  const [environments, setEnvironments] = useState([]);
+  const environments = useSelector(state => state.environments.environments);
+  const currentEnvironment = useSelector(state => state.environments.currentEnvironment);
   useEffect(() => {
-    let envDatas = localStorage.getItem(constants.enviroments);
-    let envs = JSON.parse(envDatas);
-    setEnvironments(envs);
+    dispatch({
+      type: "GET_ENVIRONMENTS"
+    });
+    dispatch({
+      type: "GET_CURRENT_ENVIRONMENT"
+    })
   }, []);
 
   return (
     <div className="bp3-select .modifier">
       <select onChange={changeEnvironment}>
         <option>Environments</option>
-        {environments.map((item: any) => (<option value={item.url}>{item.name}</option>))}
+        {environments?.map((item: any) => (<option value={item.name} selected={item.name == currentEnvironment}>{item.name}</option>))}
       </select>
     </div>)
 };

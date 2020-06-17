@@ -1,13 +1,14 @@
 import {Dispatch as ReduxDispatch, Store as ReduxStore, Action} from 'redux';
 
-export type counterStateType = {
-  counter: number;
+export type environmentStateType = {
   environments: any[];
-  currentEnvironment: string
+  vHosts: any[];
+  currentEnvironment: string;
+  currentVhost: string;
 };
 
-export type GetState = () => counterStateType;
+export type GetState = () => environmentStateType;
 
 export type Dispatch = ReduxDispatch<Action<string>>;
 
-export type Store = ReduxStore<counterStateType, Action<string>>;
+export type Store = ReduxStore<environmentStateType, Action<string>>;

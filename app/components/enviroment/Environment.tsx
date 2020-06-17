@@ -1,15 +1,21 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-export const Environment = () => {
+type Props = {
+  change: (payload: any) => void
+};
+
+export const Environment = ({change}: Props) => {
   const dispatch = useDispatch();
 
-  const changeEnvironment = (e: any) => {
-    dispatch({
-      type: "CHANGE_ENVIRONMENT",
-      payload: e.target.value
-    })
-  }
+  // const changeEnvironment = (e: any) => {
+  //   // dispatch({
+  //   //   type: "CHANGE_ENVIRONMENT",
+  //   //   payload: e.target.value
+  //   // })
+  //
+  //   change(e.target.value)
+  // }
 
   const environments = useSelector(state => state.environments.environments);
   const currentEnvironment = useSelector(state => state.environments.currentEnvironment);
@@ -24,9 +30,9 @@ export const Environment = () => {
 
   return (
     <div className="bp3-select .modifier">
-      <select onChange={changeEnvironment}>
-        <option>Environments</option>
-        {environments?.map((item: any) => (<option value={item.name} selected={item.name == currentEnvironment}>{item.name}</option>))}
+      <select onChange={ (e) => change(e.target.value)}>
+        {environments?.map((item: any, index: number) => (
+          <option value={item.name} key={index} selected={item.name == currentEnvironment}>{item.name}</option>))}
       </select>
     </div>)
 };

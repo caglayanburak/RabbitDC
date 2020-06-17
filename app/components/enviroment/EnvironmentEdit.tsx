@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState} from 'react';
 import styles from './Environment.css';
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
@@ -25,8 +25,10 @@ export default function EnvironmentEdit({add, remove, getAll, environments}: Pro
   const saveEnvironment = () => {
     let env = {name: environment, url: url, userName: userName, password: password};
     add(env);
+
     clearFields();
   }
+
   const clearFields = () => {
     setEnvironment("");
     setUrl(urlInitalState);

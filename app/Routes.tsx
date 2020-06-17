@@ -4,13 +4,13 @@ import routes from './constants/routes.json';
 import App from './containers/App';
 import HomePage from './containers/HomePage';
 import CounterPage from './containers/CounterPage';
-import {Navbar} from "./components/Header/Navbar";
 import EnvironmentPage from "./containers/EnvironmentPage";
+import HeaderPage from "./containers/HeaderPage";
 
 export default function Routes() {
   return (
     <App>
-      <Navbar />
+      <HeaderPage />
       <Switch>
         <Route path={routes.COUNTER} component={CounterPage}  />
         <Route path={routes.HOME} exact  component={HomePage} />

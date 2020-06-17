@@ -278,6 +278,7 @@
     "@blueprintjs/table": "^3.8.8",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@hot-loader/react-dom": "^16.13.0",
+    "axios": "^0.19.2",
     "connected-react-router": "^6.8.0",
     "core-js": "^3.6.5",
     "devtron": "^1.4.0",

@@ -1,7 +1,8 @@
 import {AppToaster} from "../toast/toaster";
 
 export const addEnvironment = (env: any) => {
-  let environments = JSON.parse(localStorage.getItem("environments"));
+  let items = localStorage.getItem("environments");
+  let environments = JSON.parse(items);
   if (environments == null) {
     environments = [];
   }
@@ -14,11 +15,15 @@ export const addEnvironment = (env: any) => {
 }
 
 export const changeCurrentEnvironment = (currentEnvironment: string) => {
-  localStorage.setItem("currentEnvironment", currentEnvironment);
+  let environments = getEnvironments;
+  var cEnvironment = environments().find(x => x.name == currentEnvironment);
+
+  localStorage.setItem("currentEnvironment", JSON.stringify(cEnvironment));
 }
 
 export const getCurrentEnvironment = () => {
-  return localStorage.getItem("currentEnvironment");
+  let currentEnvironment = JSON.parse(localStorage.getItem("currentEnvironment"));
+  return currentEnvironment.name;
 }
 
 export const getEnvironments = (): any[] => {
@@ -33,5 +38,7 @@ export const removeEnvironment = (environment: any) => {
   localStorage.setItem("environments", JSON.stringify(environments));
   AppToaster.show({message: "Environment deleted.", icon: "confirm", intent: "success"});
 }
+
+
 
 

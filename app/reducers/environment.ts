@@ -3,7 +3,9 @@ import {
   CHANGE_ENVIRONMENT,
   ADD_ENVIRONMENT,
   GET_ENVIRONMENTS,
-  REMOVE_ENVIRONMENT, GET_CURRENT_ENVIRONMENT
+  REMOVE_ENVIRONMENT, GET_CURRENT_ENVIRONMENT,
+  FETCH_VHOSTS_SUCCESS,
+  CHANGE_VHOSTS, GET_CURRENT_VHOST
 } from '../actions/environment';
 import {
   addEnvironment,
@@ -11,8 +13,14 @@ import {
   getEnvironments,
   removeEnvironment
 } from "../services/environment-services";
+import {changeCurrentVhosts, getCurrentVhost} from "../services/queues-service";
 
-export default function environment(state = {environments: [], currentEnvironment: ""}, action: Action<string>) {
+export default function environment(state = {
+  environments: [],
+  currentEnvironment: "",
+  currentVhost: "",
+  vHosts: []
+}, action: Action<string>) {
   switch (action.type) {
     case CHANGE_ENVIRONMENT:
       changeCurrentEnvironment(action.payload);
@@ -45,6 +53,25 @@ export default function environment(state = {environments: [], currentEnvironmen
         ...state,
         currentEnvironment: currentEnvironment
       })
+    case GET_CURRENT_VHOST:
+      let currentVhost = getCurrentVhost();
+
+      return ({
+        ...state,
+        currentVhost: currentVhost
+      })
+    case FETCH_VHOSTS_SUCCESS:
+      let hosts = action.payload;
+      return ({
+        ...state,
+        vHosts: hosts
+      })
+    case CHANGE_VHOSTS:
+      changeCurrentVhosts(action.payload);
+      return {
+        ...state,
+        currentVhost: action.payload
+      }
     default:
       return state;
   }

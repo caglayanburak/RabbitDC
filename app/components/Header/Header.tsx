@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Environment} from "../enviroment/Environment";
+import {Environment} from "../environment/Environment";
 import {Button, Menu, MenuItem, Popover} from "@blueprintjs/core";
 import {Position} from "@blueprintjs/core/lib/esm/common/position";
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
-import {Vhosts} from "../enviroment/Vhosts";
+import {Vhosts} from "../environment/Vhosts";
 import {useEffect} from "react";
 
 type Props = {
@@ -13,13 +13,15 @@ type Props = {
   getVhosts: () => void,
   getCurrentVhost: () => void,
   vHosts: any[],
-  currentVhost: string
+  currentVhost: string,
+  getQueues: any
 };
 
-export const Navbar = ({change, getVhosts, vHosts, changeVhosts, currentVhost, getCurrentVhost}: Props) => {
+export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, getCurrentVhost , getQueues}: Props) => {
   useEffect(() => {
     getVhosts();
     getCurrentVhost();
+    getQueues();
   }, []);
 
   return (

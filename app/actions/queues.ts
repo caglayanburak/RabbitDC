@@ -1,22 +1,8 @@
-import {GetState, Dispatch} from '../reducers/types';
+import { createAsyncAction } from 'typesafe-actions';
+import { QueueDto } from '../response-types/queue-dto';
 
-export const ADD_Q = 'INCREMENT_COUNTER';
-export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
-
-export function addQueue(queue: any) {
-  return function(dispatch: any) {
-    return queuesApi.addQueue(queue).then();
-  };
-}
-
-export function deleteQueue(queue: any) {
-  return {type: 'DELETE_QUEUE', queue}
-}
-
-export function loadCourses() {
-  return function(dispatch: any) {
-    return courseApi.getCourses().then(courses => {
-      dispatch(loadCourseSuccess(courses));
-    });
-  };
-}
+export const getQueuesAsync = createAsyncAction(
+  `GET_QUEUES_REQUEST`,
+  `GET_QUEUES_SUCCESS`,
+  `GET_QUEUES_FAILED`
+)<undefined, QueueDto[], Error>();

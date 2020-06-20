@@ -6,7 +6,10 @@ import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
 import * as environmentActions from '../actions/environment';
+import * as queueActions from '../actions/queues'
 import { counterStateType } from '../reducers/types';
+import { createEpicMiddleware } from 'redux-observable';
+import rootEpic from '../epics/index';
 
 declare global {
   interface Window {
@@ -34,6 +37,10 @@ const configureStore = (initialState?: counterStateType) => {
   // Thunk Middleware
   middleware.push(thunk);
 
+  // Rx Observables
+  const epicMiddleware = createEpicMiddleware();
+  middleware.push(epicMiddleware);
+
   // Logging Middleware
   const logger = createLogger({
     level: 'info',
@@ -53,6 +60,7 @@ const configureStore = (initialState?: counterStateType) => {
   const actionCreators = {
     ...counterActions,
     ...environmentActions,
+    ...queueActions,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -71,6 +79,8 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Create Store
   const store = createStore(rootReducer, initialState, enhancer);
+
+  epicMiddleware.run(rootEpic);
 
   if (module.hot) {
     module.hot.accept(

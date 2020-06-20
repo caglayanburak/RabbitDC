@@ -1,4 +1,3 @@
-import {bindActionCreators, Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {
   change,
@@ -7,7 +6,8 @@ import {
   getCurrentVhost
 } from '../actions/environment';
 import {environmentStateType} from "../reducers/types";
-import {Navbar} from "../components/Header/Navbar";
+import {Header} from "../components/Header/Header";
+import { getQueuesAsync } from '../actions/queues';
 
 function mapStateToProps(state: environmentStateType) {
   return {
@@ -18,16 +18,12 @@ function mapStateToProps(state: environmentStateType) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
-    {
+const mapDispatchToProps =  {
       change,
       changeVhosts,
       getVhosts,
-      getCurrentVhost
-    },
-    dispatch
-  );
+      getCurrentVhost,
+      getQueues : getQueuesAsync.request
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

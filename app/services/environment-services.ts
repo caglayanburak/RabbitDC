@@ -22,12 +22,24 @@ export const changeCurrentEnvironment = (currentEnvironment: string) => {
 }
 
 export const getCurrentEnvironment = () => {
-  let currentEnvironment = JSON.parse(localStorage.getItem("currentEnvironment"));
-  return currentEnvironment.name;
+  let currentEnvironment;
+  try {
+    currentEnvironment =  JSON.parse(localStorage.getItem("currentEnvironment"));
+  }
+  catch (e) {
+    currentEnvironment = {};
+  }
+  return currentEnvironment;
 }
 
 export const getEnvironments = (): any[] => {
-  let list = JSON.parse(localStorage.getItem("environments"));
+  let list ;
+  try {
+    list =  JSON.parse(localStorage.getItem("environments"));
+  }
+  catch (e) {
+    list = [];
+  }
   return list;
 }
 

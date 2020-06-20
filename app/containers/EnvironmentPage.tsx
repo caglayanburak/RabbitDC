@@ -1,6 +1,5 @@
-import {bindActionCreators, Dispatch} from 'redux';
 import {connect} from 'react-redux';
-import EnvironmentEdit from '../components/enviroment/EnvironmentEdit';
+import EnvironmentEdit from '../components/environment/EnvironmentEdit';
 import {
   add,
   remove,
@@ -16,16 +15,11 @@ function mapStateToProps(state: counterStateType) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
-    {
+const mapDispatchToProps = {
       add,
       remove,
       change,
-      getAll
-    },
-    dispatch
-  );
+      getAll,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EnvironmentEdit);

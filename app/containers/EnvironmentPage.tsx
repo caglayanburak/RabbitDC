@@ -6,9 +6,9 @@ import {
   change,
   getAll
 } from '../actions/environment';
-import {counterStateType} from "../reducers/types";
+import {environmentStateType} from "../reducers/types";
 
-function mapStateToProps(state: counterStateType) {
+function mapStateToProps(state: environmentStateType) {
   return {
     environments: state.environments,
     currentEnvironment: state.currentEnvironment

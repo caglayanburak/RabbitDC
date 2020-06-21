@@ -4,12 +4,11 @@ import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
 import * as environmentActions from '../actions/environment';
 import * as queueActions from '../actions/queues'
-import { counterStateType } from '../reducers/types';
 import { createEpicMiddleware } from 'redux-observable';
 import rootEpic from '../epics/index';
+import { environmentStateType } from '../reducers/types';
 
 declare global {
   interface Window {
@@ -29,7 +28,7 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: environmentStateType) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -58,7 +57,6 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
     ...environmentActions,
     ...queueActions,
     ...routerActions

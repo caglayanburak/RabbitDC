@@ -1488,12 +1488,12 @@
     classnames "^2.2"
     tslib "~1.10.0"
 
-"@blueprintjs/table@^3.8.8":
-  version "3.8.8"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.8.8.tgz#f48263969c2c0facc69be0b3d5b4c74f85a123c1"
-  integrity sha512-kwGCOQxTDFzk0ZWwBss9Rl0DvP4Eo9zi/ZAg+DVkbtCUmiMqodIMVcCSRIhdzzxCdaE2lZOq+Oz7IUp9dsUTBg==
+"@blueprintjs/table@^3.8.9":
+  version "3.8.9"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/table/-/table-3.8.9.tgz#f72cc2ce7bae0be624c102b7e52359d273af700d"
+  integrity sha512-qaBJozoqDN7Ux6L4yerQ/QSWzz4AVEgu8N1oRNQkjCt7x8juktoomG/9fCgOw24ZOYHHLxM5CuWNbdz2jdEBSw==
   dependencies:
-    "@blueprintjs/core" "^3.28.1"
+    "@blueprintjs/core" "^3.28.2"
     classnames "^2.2"
     lodash "^4.17.15"
     prop-types "^15.6.0"

@@ -13,15 +13,13 @@ type Props = {
   getVhosts: () => void,
   getCurrentVhost: () => void,
   vHosts: any[],
-  currentVhost: string,
-  getQueues: any
+  currentVhost: string
 };
 
-export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, getCurrentVhost , getQueues}: Props) => {
+export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, getCurrentVhost}: Props) => {
   useEffect(() => {
     getVhosts();
     getCurrentVhost();
-    getQueues();
   }, []);
 
   return (
@@ -31,9 +29,11 @@ export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, g
           <div className="bp3-navbar-heading">RabbitMQ Desktop Client</div>
         </div>
         <div className="bp3-navbar-group bp3-align-right">
-          <button className="bp3-button bp3-minimal bp3-icon-home">
-            Queues
-          </button>
+          <Link to={routes.QUEUES}>
+            <button className="bp3-button bp3-minimal bp3-icon-home" >
+              Queues
+            </button>
+          </Link>
           <button className="bp3-button bp3-minimal bp3-icon-document">
             Error Queues
           </button>

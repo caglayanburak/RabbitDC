@@ -6,7 +6,7 @@ import { from, of } from 'rxjs';
 import { catchError, filter, map, switchMap} from 'rxjs/operators';
 import { getQueues } from '../services/queues-service';
 
-export const queueEpic: any = (action$, state$) =>
+export const queueEpic: any = (action$) =>
   action$.pipe(
     filter(isActionOf(actions.getQueuesAsync.request)),
     switchMap(() =>

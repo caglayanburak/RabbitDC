@@ -1,30 +1,17 @@
-import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import Queues from '../components/Queues';
-
-import {
-  addQueue,
-  deleteQueue
-} from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import { environmentStateType } from '../reducers/types';
 import { Queues } from '../components/Queues/Queues';
+import { getQueuesAsync } from '../actions/queues';
 
-function mapStateToProps(state: counterStateType) {
+function mapStateToProps(state: environmentStateType) {
   return {
-    counter: state.counter
+    queues: state.queues
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
+const mapDispatchToProps =
     {
-      increment,
-      decrement,
-      incrementIfOdd,
-      incrementAsync
-    },
-    dispatch
-  );
-}
+      getQueues: getQueuesAsync.request
+    }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Queues);

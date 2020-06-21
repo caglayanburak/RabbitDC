@@ -1,27 +1,37 @@
 import axios from "axios";
+import { QueueDto } from '../response-types/queue-dto';
 export const getHosts = async () => {
-  let currentEnvironment = JSON.parse(localStorage.getItem("currentEnvironment"));
+  const currentEnvironment = localStorage.getItem("currentEnvironment");
+  if(!currentEnvironment) {
+    return [];
+  }
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
   const result = await axios(
     {
       method: 'GET',
-      auth: {username: currentEnvironment.userName, password: currentEnvironment.password},
-      url: currentEnvironment.url + '/api/vhosts',
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + '/api/vhosts',
     }
   );
   return result;
 }
 
-export const getQueues = async () => {
-  debugger;
-  let currentEnvironment = JSON.parse(localStorage.getItem("currentEnvironment"));
+export const getQueues = async () : Promise<QueueDto[]> => {
+  const currentEnvironment = localStorage.getItem("currentEnvironment");
+  if(!currentEnvironment) {
+    return [] as QueueDto[];
+  }
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
   const result = await axios(
     {
       method: 'GET',
-      auth: {username: currentEnvironment.userName, password: currentEnvironment.password},
-      url: currentEnvironment.url + '/api/queues?page=1&page_size=100&name=&use_regex=false&pagination=true',
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + '/api/queues?page=1&page_size=100&name=&use_regex=false&pagination=true',
     }
   );
-  return result;
+  return result.data.items as QueueDto[];
 }
 
 export const changeCurrentVhosts = (currentVhost: string) => {

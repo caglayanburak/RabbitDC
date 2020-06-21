@@ -36,8 +36,8 @@ export function getVhosts() {
   return (dispatch: Dispatch) => {
     getHosts().then((result: any) => {
       dispatch(fetchVhostsSuccess(result.data));
-    }).catch((error: any) => {
-      dispatch(fetchVhostsFailure(error));
+    }).catch(() => {
+      dispatch(fetchVhostsFailure());
     });
   };
 }
@@ -79,12 +79,6 @@ const removeItem = (env: any) => {
   return {
     type: REMOVE_ENVIRONMENT,
     payload: env
-  };
-}
-
-const fetchVhostsRequest = () => {
-  return {
-    type: FETCH_VHOSTS_REQUEST
   };
 }
 

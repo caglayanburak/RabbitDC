@@ -16,10 +16,10 @@ import {
 import {changeCurrentVhosts, getCurrentVhost} from "../services/queues-service";
 
 export default function environment(state = {
-  environments: [],
+  environments: [] as any,
   currentEnvironment: "",
   currentVhost: "",
-  vHosts: []
+  vHosts: [] as any
 }, action: Action<string>) {
   switch (action.type) {
     case CHANGE_ENVIRONMENT:

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {Environment} from "../environment/Environment";
+import {Environment} from "../environment/environment";
 import {Button, Menu, MenuItem, Popover} from "@blueprintjs/core";
 import {Position} from "@blueprintjs/core/lib/esm/common/position";
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
-import {Vhosts} from "../environment/Vhosts";
+import {Vhosts} from "../environment/vhosts";
 import {useEffect} from "react";
 
 type Props = {

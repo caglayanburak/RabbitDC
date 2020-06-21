@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import EnvironmentEdit from '../components/environment/EnvironmentEdit';
+import EnvironmentEdit from '../components/environment/environment-edit';
 import {
   add,
   remove,

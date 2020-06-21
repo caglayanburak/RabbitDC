@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { environmentStateType } from '../reducers/types';
-import { Queues } from '../components/Queues/Queues';
+import { Queues } from '../components/queues/queues';
 import { getQueuesAsync } from '../actions/queues';
 
 function mapStateToProps(state: environmentStateType) {

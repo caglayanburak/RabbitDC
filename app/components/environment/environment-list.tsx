@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import styles from './Environment.css';
+import styles from './environment.css';
 import {Cell, Column, Table} from "@blueprintjs/table";
 import {Button} from "@blueprintjs/core";
 

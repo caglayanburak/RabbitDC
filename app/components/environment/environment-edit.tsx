@@ -1,9 +1,9 @@
 import React, { useState} from 'react';
-import styles from './Environment.css';
+import styles from './environment.css';
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
 import {Button, FormGroup, InputGroup} from "@blueprintjs/core";
-import EnvironmentList from "./EnvironmentList";
+import EnvironmentList from "./environment-list";
 
 type Props = {
   add: (payload: any) => void,

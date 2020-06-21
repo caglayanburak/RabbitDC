@@ -6,7 +6,7 @@ import {
   getCurrentVhost
 } from '../actions/environment';
 import {environmentStateType} from "../reducers/types";
-import {Header} from "../components/Header/Header";
+import {Header} from "../components/header/header";
 import { getQueuesAsync } from '../actions/queues';
 
 function mapStateToProps(state: environmentStateType) {

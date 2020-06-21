@@ -7,7 +7,6 @@ import {
 } from '../actions/environment-actions';
 import {stateType} from "../reducers/types";
 import {Header} from "../components/header/header";
-import { getQueuesAsync } from '../actions/queue-actions';
 
 function mapStateToProps(state: stateType) {
   return {
@@ -23,7 +22,6 @@ const mapDispatchToProps =  {
       changeVhosts,
       getVhosts,
       getCurrentVhost,
-      getQueues : getQueuesAsync.request
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -32,14 +32,6 @@ export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, g
           </div>
         </div>
         <div className="bp3-navbar-group bp3-align-right">
-          <Link to={routes.QUEUES}>
-            <button className="bp3-button bp3-minimal bp3-icon-home" >
-              Queues
-            </button>
-          </Link>
-          <button className="bp3-button bp3-minimal bp3-icon-document">
-            Error Queues
-          </button>
           <Vhosts changeVhosts={changeVhosts} vHosts={vHosts} currentVhost={currentVhost}/>
           <Environment change={change}/>
           <span className="bp3-navbar-divider"/>

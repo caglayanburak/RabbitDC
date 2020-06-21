@@ -6,13 +6,13 @@ import { getQueuesAsync } from '../actions/queue-actions';
 function mapStateToProps(state: stateType) {
   return {
     queues: state.queues,
-    currentVhost : state.environments.currentVhost
+    currentVhost: state.environments.currentVhost
   };
 }
 
 const mapDispatchToProps =
-    {
-      getQueues: getQueuesAsync.request
-    }
+  {
+    getQueues: getQueuesAsync.request
+  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Queues);

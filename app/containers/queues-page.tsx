@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { environmentStateType } from '../reducers/types';
+import { stateType } from '../reducers/types';
 import { Queues } from '../components/queues/queues';
-import { getQueuesAsync } from '../actions/queues';
+import { getQueuesAsync } from '../actions/queue-actions';
 
-function mapStateToProps(state: environmentStateType) {
+function mapStateToProps(state: stateType) {
   return {
-    queues: state.queues
+    queues: state.queues,
+    currentVhost : state.environments.currentVhost
   };
 }
 

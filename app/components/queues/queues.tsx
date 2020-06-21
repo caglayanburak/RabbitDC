@@ -5,17 +5,18 @@ import { Cell, Column, Table } from '@blueprintjs/table';
 
 
 type props = {
-  queues : QueueDto[]
+  currentVhost: string
+  queues: QueueDto[]
   getQueues: any
 }
 
-export const Queues = ({ queues, getQueues } : props) => {
+export const Queues = ({ currentVhost, queues, getQueues }: props) => {
   useEffect(() => {
-    getQueues();
-  }, []);
+    getQueues(currentVhost);
+  }, [currentVhost]);
 
   const cellRendererQueues = (rowIndex: number) => {
-    return <Cell>{queues[rowIndex]?.name}</Cell>
+    return <Cell>{queues[rowIndex]?.name}</Cell>;
   };
 
   return (

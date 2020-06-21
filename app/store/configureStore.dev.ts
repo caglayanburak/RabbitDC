@@ -3,12 +3,10 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
-import createRootReducer from '../reducers';
-import * as environmentActions from '../actions/environment';
-import * as queueActions from '../actions/queues'
+import createRootReducer from '../reducers/root-reducer';
 import { createEpicMiddleware } from 'redux-observable';
-import rootEpic from '../epics/index';
-import { environmentStateType } from '../reducers/types';
+import rootEpic from '../epics/root-epic';
+import * as rootAction from '../actions/root-action';
 
 declare global {
   interface Window {
@@ -28,7 +26,7 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: environmentStateType) => {
+const configureStore = () => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -57,8 +55,7 @@ const configureStore = (initialState?: environmentStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...environmentActions,
-    ...queueActions,
+    ...rootAction,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -76,15 +73,15 @@ const configureStore = (initialState?: environmentStateType) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(rootReducer, {}, enhancer);
 
   epicMiddleware.run(rootEpic);
 
   if (module.hot) {
     module.hot.accept(
-      '../reducers',
+      '../reducers/root-reducer',
       // eslint-disable-next-line global-require
-      () => store.replaceReducer(require('../reducers').default)
+      () => store.replaceReducer(require('../reducers/root-reducer').default)
     );
   }
 

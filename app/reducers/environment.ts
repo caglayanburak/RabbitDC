@@ -6,7 +6,7 @@ import {
   REMOVE_ENVIRONMENT, GET_CURRENT_ENVIRONMENT,
   FETCH_VHOSTS_SUCCESS,
   CHANGE_VHOSTS, GET_CURRENT_VHOST
-} from '../actions/environment';
+} from '../actions/environment-actions';
 import {
   addEnvironment,
   changeCurrentEnvironment, getCurrentEnvironment,

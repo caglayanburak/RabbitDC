@@ -4,15 +4,15 @@ import {
   changeVhosts,
   getVhosts,
   getCurrentVhost
-} from '../actions/environment';
-import {environmentStateType} from "../reducers/types";
+} from '../actions/environment-actions';
+import {stateType} from "../reducers/types";
 import {Header} from "../components/header/header";
-import { getQueuesAsync } from '../actions/queues';
+import { getQueuesAsync } from '../actions/queue-actions';
 
-function mapStateToProps(state: environmentStateType) {
+function mapStateToProps(state: stateType) {
   return {
     environments: state.environments,
-    currentEnvironment: state.currentEnvironment,
+    currentEnvironment: state.environments.currentEnvironment,
     vHosts: state.environments.vHosts,
     currentVhost: state.environments.currentVhost
   };

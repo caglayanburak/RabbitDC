@@ -5,13 +5,13 @@ import {
   remove,
   change,
   getAll
-} from '../actions/environment';
-import {environmentStateType} from "../reducers/types";
+} from '../actions/environment-actions';
+import {stateType} from "../reducers/types";
 
-function mapStateToProps(state: environmentStateType) {
+function mapStateToProps(state: stateType) {
   return {
     environments: state.environments,
-    currentEnvironment: state.currentEnvironment
+    currentEnvironment: state.environments.currentEnvironment
   };
 }
 

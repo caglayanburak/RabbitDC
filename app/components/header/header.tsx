@@ -26,7 +26,10 @@ export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, g
     <nav className="bp3-navbar bp3-dark">
       <div>
         <div className="bp3-navbar-group bp3-align-left">
-          <div className="bp3-navbar-heading">RabbitMQ Desktop Client</div>
+          <div className="bp3-navbar-heading">
+            <Link to={routes.HOME}>RabbitMQ Desktop Client
+            </Link>
+          </div>
         </div>
         <div className="bp3-navbar-group bp3-align-right">
           <Link to={routes.QUEUES}>

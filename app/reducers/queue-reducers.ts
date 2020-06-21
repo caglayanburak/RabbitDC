@@ -1,6 +1,6 @@
 import { ActionType, createReducer } from 'typesafe-actions';
 import { QueueDto } from '../response-types/queue-dto';
-import * as actions from '../actions/queues'
+import * as actions from '../actions/queue-actions'
 
 type SessionActions = ActionType<typeof actions>;
 

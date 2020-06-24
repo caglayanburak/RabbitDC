@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Environment} from "../environment/environment";
-import {Button, Menu, MenuItem, Popover} from "@blueprintjs/core";
+import {Button, ButtonGroup, Menu, MenuItem, Popover} from "@blueprintjs/core";
 import {Position} from "@blueprintjs/core/lib/esm/common/position";
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
@@ -32,8 +32,17 @@ export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, g
           </div>
         </div>
         <div className="bp3-navbar-group bp3-align-right">
-          <Vhosts changeVhosts={changeVhosts} vHosts={vHosts} currentVhost={currentVhost}/>
-          <Environment change={change}/>
+          <ButtonGroup minimal={true} vertical={false}>
+            <Button>
+              <label>Hosts: </label>
+              <Vhosts changeVhosts={changeVhosts} vHosts={vHosts} currentVhost={currentVhost}/>
+            </Button>
+            <Button>
+              <label>Environments :</label>
+              <Environment change={change}/>
+
+            </Button>
+          </ButtonGroup>
           <span className="bp3-navbar-divider"/>
           <button className="bp3-button bp3-minimal bp3-icon-user"/>
           <button className="bp3-button bp3-minimal bp3-icon-notifications"/>

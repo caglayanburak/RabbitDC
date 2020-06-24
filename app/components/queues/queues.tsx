@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { QueueDto } from '../../response-types/queue-dto';
-import { Cell, Column, Table } from '@blueprintjs/table';
-
+import {useEffect} from 'react';
+import {QueueDto} from '../../response-types/queue-dto';
+import {ScrollablePane} from 'office-ui-fabric-react/lib/ScrollablePane';
+import {
+  DetailsList,
+  IColumn
+} from 'office-ui-fabric-react/lib/DetailsList';
 
 type props = {
   currentVhost: string
@@ -10,20 +13,45 @@ type props = {
   getQueues: any
 }
 
-export const Queues = ({ currentVhost, queues, getQueues }: props) => {
+
+export const Queues = ({currentVhost, queues, getQueues}: props) => {
   useEffect(() => {
     getQueues(currentVhost);
   }, [currentVhost]);
 
-  const cellRendererQueues = (rowIndex: number) => {
-    return <Cell>{queues[rowIndex]?.name}</Cell>;
-  };
+  const _columns: IColumn[] = [
+    {key: 'Name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Messages', name: 'Messages', fieldName: 'messages', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Vhost', name: 'Vhost', fieldName: 'vhost', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'State', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Actions', name: 'Actions', fieldName: '', minWidth: 100, maxWidth: 200, isResizable: true},
+  ];
+
+  const _renderItemColumn = (item: QueueDto, index: number, column: IColumn) => {
+    const fieldContent = item[column.fieldName as keyof QueueDto] as string;
+
+    switch (column.key) {
+      case 'Actions':
+        console.log('tesr');
+        return <span>test</span>;
+
+      default:
+        return <span>{fieldContent}</span>;
+    }
+  }
+
 
   return (
-    <div>
-      <Table numRows={queues?.length ?? 0}>
-        <Column name="Queues" cellRenderer={cellRendererQueues}/>
-      </Table>
-    </div>
+    <ScrollablePane>
+      <DetailsList
+        items={queues}
+        columns={_columns}
+        onRenderItemColumn={_renderItemColumn}
+      >
+
+      </DetailsList>
+
+    </ScrollablePane>
+
   );
 };

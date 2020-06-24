@@ -279,6 +279,7 @@
     "@blueprintjs/docs-theme": "^3.6.0",
     "@blueprintjs/select": "^3.13.2",
     "@blueprintjs/table": "^3.8.9",
+    "@fluentui/react": "^7.121.2",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@hot-loader/react-dom": "^16.13.0",
     "axios": "^0.19.2",

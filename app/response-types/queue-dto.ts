@@ -1,3 +1,6 @@
 export interface QueueDto {
-  name: string
+  name: string;
+  messages: number;
+  state: string;
+
 }

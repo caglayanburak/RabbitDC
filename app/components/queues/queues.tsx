@@ -2,12 +2,13 @@ import * as React from 'react';
 import {useEffect} from 'react';
 import {QueueDto} from '../../response-types/queue-dto';
 import {ScrollablePane} from 'office-ui-fabric-react/lib/ScrollablePane';
+import {initializeIcons} from 'office-ui-fabric-react/lib/Icons';
 import {
   DetailsList,
   IColumn
 } from 'office-ui-fabric-react/lib/DetailsList';
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
-import {IButtonProps} from "@blueprintjs/core";
+import {CommandBar, ICommandBarItemProps} from 'office-ui-fabric-react/lib/CommandBar';
+import {FontIcon} from 'office-ui-fabric-react/lib/Icon';
 
 type props = {
   currentVhost: string
@@ -18,6 +19,7 @@ type props = {
 
 export const Queues = ({currentVhost, queues, getQueues}: props) => {
   useEffect(() => {
+    initializeIcons();
     getQueues(currentVhost);
   }, [currentVhost]);
 
@@ -26,21 +28,21 @@ export const Queues = ({currentVhost, queues, getQueues}: props) => {
     {key: 'Messages', name: 'Messages', fieldName: 'messages', minWidth: 100, maxWidth: 200, isResizable: true},
     {key: 'Vhost', name: 'Vhost', fieldName: 'vhost', minWidth: 100, maxWidth: 200, isResizable: true},
     {key: 'State', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Consumer', name: 'Consumer', fieldName: 'consumers', minWidth: 100, maxWidth: 200, isResizable: true},
     {key: 'Actions', name: 'Actions', fieldName: '', minWidth: 100, maxWidth: 200, isResizable: true},
   ];
 
-  const overflowProps: IButtonProps = { ariaLabel: 'More commands' };
 
   const _renderItemColumn = (item: QueueDto, index: number, column: IColumn) => {
     const fieldContent = item[column.fieldName as keyof QueueDto] as string;
 
     switch (column.key) {
+      case 'State':
+        return <span><FontIcon iconName="CircleFill"
+                               style={{color: fieldContent == "running" ? "#4ef04e" : "red"}}></FontIcon> {fieldContent}</span>;
       case 'Actions':
-        return  <CommandBar
+        return <CommandBar
           items={_items}
-          overflowItems={_overflowItems}
-          overflowButtonProps={overflowProps}
-          farItems={_farItems}
           ariaLabel="Use left and right arrow keys to navigate between commands"
         />;
 
@@ -51,53 +53,30 @@ export const Queues = ({currentVhost, queues, getQueues}: props) => {
 
   const _items: ICommandBarItemProps[] = [
     {
-      key: 'newItem',
-      text: 'New',
+      key: 'action',
+      text: 'Choose Action...',
       cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
-      iconProps: { iconName: 'Add' },
       subMenuProps: {
         items: [
           {
-            key: 'emailMessage',
-            text: 'Email message',
-            iconProps: { iconName: 'Mail' },
+            key: 'purge',
+            text: 'Purge',
             ['data-automation-id']: 'newEmailButton', // optional
+            iconProps: {iconName: 'RecycleBin'}
           },
           {
-            key: 'calendarEvent',
-            text: 'Calendar event',
-            iconProps: { iconName: 'Calendar' },
+            key: 'move',
+            text: 'Move',
+            iconProps: {iconName: 'Move'},
+          },
+          {
+            key: 'delete',
+            text: 'Delete',
+            iconProps: {iconName: 'trash'},
           },
         ],
       },
     }
-  ];
-
-  const _overflowItems: ICommandBarItemProps[] = [
-    { key: 'move', text: 'Move to...', onClick: () => console.log('Move to'), iconProps: { iconName: 'MoveToFolder' } },
-    { key: 'copy', text: 'Copy to...', onClick: () => console.log('Copy to'), iconProps: { iconName: 'Copy' } },
-    { key: 'rename', text: 'Rename...', onClick: () => console.log('Rename'), iconProps: { iconName: 'Edit' } },
-  ];
-
-  const _farItems: ICommandBarItemProps[] = [
-    {
-      key: 'tile',
-      text: 'Grid view',
-      // This needs an ariaLabel since it's icon-only
-      ariaLabel: 'Grid view',
-      iconOnly: true,
-      iconProps: { iconName: 'Tiles' },
-      onClick: () => console.log('Tiles'),
-    },
-    {
-      key: 'info',
-      text: 'Info',
-      // This needs an ariaLabel since it's icon-only
-      ariaLabel: 'Info',
-      iconOnly: true,
-      iconProps: { iconName: 'Info' },
-      onClick: () => console.log('Info'),
-    },
   ];
 
 

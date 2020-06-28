@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { QueueDto } from '../response-types/queue-dto';
+import {QueueDto} from '../response-types/queue-dto';
 
 export const getHosts = async () => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
@@ -11,7 +11,7 @@ export const getHosts = async () => {
   const result = await axios(
     {
       method: 'GET',
-      auth: { username: parsedEnvironment.userName, password: parsedEnvironment.password },
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
       url: parsedEnvironment.url + '/api/vhosts'
     }
   );
@@ -28,11 +28,28 @@ export const getQueues = async (vhost?: string): Promise<QueueDto[]> => {
   const result = await axios(
     {
       method: 'GET',
-      auth: { username: parsedEnvironment.userName, password: parsedEnvironment.password },
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
       url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}?page=1&page_size=100&name=&use_regex=false&pagination=true`
     }
   );
   return result.data.items as QueueDto[];
+};
+
+export const purgeQueues = async (vhost?: string, queueName: string): Promise<void> => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return;
+  }
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  await axios(
+    {
+      method: 'DELETE',
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}/${queueName}/contents`
+    }
+  );
+  return ;
 };
 
 export const changeCurrentVhosts = (currentVhost: string) => {

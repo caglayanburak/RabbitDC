@@ -1,9 +1,11 @@
-import React, { useState} from 'react';
-import styles from './environment.css';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
-import {Button, FormGroup, InputGroup} from "@blueprintjs/core";
 import EnvironmentList from "./environment-list";
+import {ScrollablePane} from "office-ui-fabric-react/lib/ScrollablePane";
+import {TextField} from 'office-ui-fabric-react/lib/TextField';
+import {DefaultButton, Stack } from "office-ui-fabric-react";
+import {environmentContainerStyle, headerStyles, saveButtonStyles, stackItemStyles} from "./environment-styles";
 
 type Props = {
   add: (payload: any) => void,
@@ -22,6 +24,8 @@ export default function EnvironmentEdit({add, remove, getAll, environments}: Pro
   const [userName, setUserName] = useState(userNameInitalState);
   const [password, setPassword] = useState(passwordInitalState);
 
+
+
   const saveEnvironment = () => {
     let env = {name: environment, url: url, userName: userName, password: password};
     add(env);
@@ -37,54 +41,73 @@ export default function EnvironmentEdit({add, remove, getAll, environments}: Pro
   }
 
   return (
-    <div data-tid="container" className={styles.container}>
-      <Link to={routes.HOME}>
-        <i className="fa fa-arrow-left fa-3x"/>
-      </Link>
-      <h4>Add Environment</h4>
-      <FormGroup
-        label="Environment"
-        labelFor="text-input"
-        labelInfo="(required)"
-        className={`${styles.myClass} bp3-dark`}
-      >
-        <InputGroup id="text-input" placeholder="Environment" value={environment}
-                    onChange={(e: any) => setEnvironment(e.target.value)}/>
-      </FormGroup>
 
-      <FormGroup
-        label="Url"
-        labelFor="text-input"
-        labelInfo="(required)"
-        className={`${styles.myClass} bp3-dark`}
-      >
-        <InputGroup id="text-input" placeholder="Url" value={url} onChange={(e: any) => {
-          setUrl(e.target.value)
-        }}/>
-      </FormGroup>
+    <ScrollablePane style={environmentContainerStyle}>
+      <Stack>
+        <Stack.Item align="auto" styles={stackItemStyles}>
+          <div className="ms-Grid " dir="ltr">
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md12 ms-lg12">
 
-      <FormGroup
-        label="User Name"
-        labelFor="text-input"
-        labelInfo="(required)"
-        className={`${styles.myClass} bp3-dark`}
-      >
-        <InputGroup id="text-input" placeholder="User Name" value={userName}
-                    onChange={(e: any) => setUserName(e.target.value)}/>
-      </FormGroup>
-      <FormGroup
-        label="Password"
-        labelFor="text-input"
-        labelInfo="(required)"
-        className={`${styles.myClass} bp3-dark`}
-      >
-        <InputGroup id="text-input" placeholder="Password" value={password}
-                    onChange={(e: any) => setPassword(e.target.value)}/>
-        <Button className={styles.saveButton} icon={"saved"} onClick={saveEnvironment}>Save</Button>
+                <Link to={routes.HOME}>
+                  <i className="fa fa-arrow-left fa-3x"/>
+                </Link>
+                <h3 style={headerStyles}>>>Environment Management</h3>
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6 ">
+                <TextField
+                  label="Name"
+                  value={environment}
+                  onChange={(e: any) => setEnvironment(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                <TextField
+                  label="Url"
+                  value={url} onChange={(e: any) => {
+                  setUrl(e.target.value)
+                }}
+                />
 
-      </FormGroup>
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                <TextField
+                  label="User Name"
+                  value={userName}
+                  onChange={(e: any) => setUserName(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                <TextField
+                  label="Password"
+                  value={password}
+                  onChange={(e: any) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md6 ms-lg6">
+                <DefaultButton text="Save" onClick={saveEnvironment} style={saveButtonStyles}/>
+              </div>
+            </div>
+            <div className="ms-Grid-row">
+              <div className="ms-Grid-col ms-sm12 ms-md10 ms-lg10">
+                <EnvironmentList getAll={getAll} environments={environments?.environments} remove={remove} />
+              </div>
+            </div>
+          </div>
+        </Stack.Item>
 
-      <EnvironmentList getAll={getAll} environments={environments?.environments} remove={remove}/>
-    </div>
+      </Stack>
+
+    </ScrollablePane>
   );
 }

@@ -1,7 +1,10 @@
 import React, {useEffect} from 'react';
-import styles from './environment.css';
-import {Cell, Column, Table} from "@blueprintjs/table";
-import {Button} from "@blueprintjs/core";
+import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+import {QueueDto} from "../../response-types/queue-dto";
+import { DefaultButton, IIconProps, IButtonStyles } from 'office-ui-fabric-react';
+import {initializeIcons} from "office-ui-fabric-react/lib/Icons";
+import {gridStyles} from "./environment-styles";
+import {IColumnProps} from "@blueprintjs/table";
 
 type Props = {
   getAll: () => any,
@@ -10,46 +13,52 @@ type Props = {
 };
 
 export default function EnvironmentList( { getAll, remove, environments}: Props) {
+  const deleteIcon: IIconProps = { iconName: 'trash' };
 
   const deleteEnvironment = (deleteEnvironment: string) => {
     remove(deleteEnvironment);
   }
 
-  const cellRendererEnvironment = (rowIndex: number) => {
-    return <Cell>{environments[rowIndex].name}</Cell>
-  };
-
-  const cellRendererUrl = (rowIndex: number) => {
-    return <Cell>{environments[rowIndex].url}</Cell>
-  };
-
-  const cellRendererUserName = (rowIndex: number) => {
-    return <Cell>{environments[rowIndex].userName}</Cell>
-  };
-
-  const cellRendererPassword = (rowIndex: number) => {
-    return <Cell>{environments[rowIndex].password}</Cell>
-  };
-  const cellRendererDelete = (rowIndex: number) => {
-    return <Cell><Button className="bp3-button" icon="delete" intent="danger" text=""
-                         onClick={() => deleteEnvironment(environments[rowIndex].name)}/></Cell>
-  };
-
   useEffect(() => {
+    initializeIcons();
     getAll();
   }, []);
 
+  const _columns: IColumn[] = [
+    {key: 'Name', name: 'Name', fieldName: 'name', minWidth: 100,maxWidth:200, isResizable: true },
+    {key: 'Url', name: 'Url', fieldName: 'url', minWidth: 100,  isResizable: true},
+    {key: 'User Name', name: 'User Name', fieldName: 'userName', minWidth: 100, isResizable: true},
+    {key: 'Password', name: 'Password', fieldName: 'password', minWidth: 100,  isResizable: true},
+    {key: 'delete', name: '#', fieldName: '', minWidth: 100,  isResizable: true},
+  ];
+
+  const deleteButtonStyles: IButtonStyles = {
+    root : { backgroundColor: 'white', color: 'red',border:'1px solid red' },
+  };
+
+  const _renderItemColumn = (item: QueueDto, index: number, column: IColumn) => {
+    const fieldContent = item[column.fieldName as keyof QueueDto] as string;
+
+    switch (column.key) {
+      case 'delete':
+        return  <DefaultButton iconProps={deleteIcon} styles={deleteButtonStyles} allowDisabledFocus onClick={() => deleteEnvironment(environments[index].name)}  >
+          Delete
+        </DefaultButton>;
+
+      default:
+        return <span>{fieldContent}</span>;
+    }
+  }
+
   return (
-    <div data-tid="table-container" className={styles.tablecontainer}>
-      <Table numRows={environments?.length} defaultRowHeight={35} columnWidths={[100, 200, 100,100,50]}
-             minColumnWidth={20}
-             className={`${styles.myClass} bp3-dark`}>
-        <Column name="Environment" cellRenderer={cellRendererEnvironment}/>
-        <Column name="Url" cellRenderer={cellRendererUrl} />
-        <Column name="Username" cellRenderer={cellRendererUserName} />
-        <Column name="Password" cellRenderer={cellRendererPassword} />
-        <Column name="#" cellRenderer={cellRendererDelete} />
-      </Table>
+    <div data-tid="table-container">
+      <DetailsList
+        compact={true}
+        items={environments}
+        columns={_columns}
+        layoutMode={DetailsListLayoutMode.justified}
+        onRenderItemColumn={_renderItemColumn}
+      />
     </div>
   );
 }

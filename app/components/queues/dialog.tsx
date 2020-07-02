@@ -10,10 +10,11 @@ type props = {
   dialogState: boolean,
   toggleDialog: (state: any) => void,
   queueName: string,
-  dialogMessage: any
+  dialogMessage: any,
+  confirmAction: (paramters: any) => boolean
 }
 
-export const DialogBasicExample = ({dialogState, toggleDialog, queueName, dialogMessage}: props) => {
+export const DialogBasicExample = ({dialogState, toggleDialog, queueName, dialogMessage, confirmAction}: props) => {
   const labelId: string = useId('dialogLabel');
   const subTextId: string = useId('subTextLabel');
 
@@ -44,7 +45,8 @@ export const DialogBasicExample = ({dialogState, toggleDialog, queueName, dialog
       >
         <DialogFooter>
           <PrimaryButton onClick={() => {
-            toggleDialog(false)
+            confirmAction(queueName);
+            toggleDialog(false);
           }} text="Yes"/>
           <DefaultButton onClick={() => {
             toggleDialog(false)

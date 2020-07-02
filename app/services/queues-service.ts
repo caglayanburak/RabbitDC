@@ -35,12 +35,13 @@ export const getQueues = async (vhost?: string): Promise<QueueDto[]> => {
   return result.data.items as QueueDto[];
 };
 
-export const purgeQueues = async (vhost?: string, queueName: string): Promise<void> => {
+export const purgeQueue = async (queueName: string): Promise<boolean> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
-    return;
+    return false;
   }
 
+  let vhost = getCurrentVhost();
   const parsedEnvironment = JSON.parse(currentEnvironment);
   await axios(
     {
@@ -49,7 +50,41 @@ export const purgeQueues = async (vhost?: string, queueName: string): Promise<vo
       url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}/${queueName}/contents`
     }
   );
-  return ;
+  return true;
+};
+
+export const moveQueue = async (vhost?: string, fromQueueName: string, toQueueName: string): Promise<boolean> => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return false;
+  }
+
+  var payload = {
+    component: "shovel",
+    vhost: vhost,
+    name: "Move from " + fromQueueName,
+    value: {
+      "src-uri": "amqp:///" + vhost,
+      "src-queue": fromQueueName,
+      "dest-queue": toQueueName,
+      "dest-uri": "amqp:///" + vhost,
+      "prefetch-count": 1000,
+      "add-forward-headers": false,
+      "ack-mode": "on-confirm",
+      "delete-after": "queue-length"
+    },
+  };
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  await axios(
+    {
+      method: 'PUT',
+      data: payload,
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + `/parameters/shovel/${vhost}/Move%20from%20${fromQueueName}`
+    }
+  );
+  return true;
 };
 
 export const changeCurrentVhosts = (currentVhost: string) => {

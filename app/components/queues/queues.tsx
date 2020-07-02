@@ -15,11 +15,12 @@ import {DialogBasicExample} from "./dialog";
 type props = {
   currentVhost: string
   queues: QueueDto[]
-  getQueues: any
+  getQueues: any,
+  purgeQueue: (paramters: any) => boolean
 }
 
 
-export const Queues = ({currentVhost, queues, getQueues}: props) => {
+export const Queues = ({currentVhost, queues, getQueues, purgeQueue}: props) => {
   const [openModal, setOpenModal] = useState(false);
   const [dialogState, setDialogState] = useState(false);
   const [currentQueueName, setCurrentQueueName] = useState("");
@@ -79,6 +80,7 @@ export const Queues = ({currentVhost, queues, getQueues}: props) => {
               ['data-automation-id']: 'newEmailButton', // optional
               iconProps: {iconName: 'RecycleBin'},
               onClick: () => {
+                setCurrentQueueName(item.name);
                 openDialog(true);
                 setDialogMessage({
                   title: "Purge Queue",
@@ -116,7 +118,8 @@ export const Queues = ({currentVhost, queues, getQueues}: props) => {
   return (
     <ScrollablePane>
       <MoveModal modalOpen={openModal} openModal={openMoveModal} queueName={currentQueueName}/>
-      <DialogBasicExample toggleDialog={openDialog} dialogState={dialogState} queueName={currentQueueName} dialogMessage={dialogMessage}/>
+      <DialogBasicExample toggleDialog={openDialog} dialogState={dialogState} queueName={currentQueueName}
+                          dialogMessage={dialogMessage} confirmAction={purgeQueue}/>
       <DetailsList
         items={queues}
         columns={_columns}

@@ -1,7 +1,7 @@
-import { connect } from 'react-redux';
-import { stateType } from '../reducers/types';
-import { Queues } from '../components/queues/queues';
-import { getQueuesAsync } from '../actions/queue-actions';
+import {connect} from 'react-redux';
+import {stateType} from '../reducers/types';
+import {Queues} from '../components/queues/queues';
+import {getQueuesAsync, purgeQueuesAsync} from '../actions/queue-actions';
 
 function mapStateToProps(state: stateType) {
   return {
@@ -12,7 +12,8 @@ function mapStateToProps(state: stateType) {
 
 const mapDispatchToProps =
   {
-    getQueues: getQueuesAsync.request
+    getQueues: getQueuesAsync.request,
+    purgeQueue: purgeQueuesAsync.request
   };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Queues);

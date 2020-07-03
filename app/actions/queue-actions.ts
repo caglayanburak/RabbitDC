@@ -12,3 +12,15 @@ export const purgeQueuesAsync = createAsyncAction(
   `PURGE_QUEUE_SUCCESS`,
   `PURGE_QUEUE_FAILED`
 )<undefined, boolean, Error>();
+
+export const moveQueueAsync = createAsyncAction(
+  `MOVE_QUEUE_REQUEST`,
+  `MOVE_QUEUE_SUCCESS`,
+  `MOVE_QUEUE_FAILED`
+)<undefined, boolean, Error>();
+
+export const deleteQueueAsync = createAsyncAction(
+  `DELETE_QUEUE_REQUEST`,
+  `DELETE_QUEUE_SUCCESS`,
+  `DELETE_QUEUE_FAILED`
+)<undefined, boolean, Error>();

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {useId} from '@uifabric/react-hooks';
 import {TextField} from 'office-ui-fabric-react/lib/TextField';
-import {DefaultButton, Stack} from 'office-ui-fabric-react';
+import {DefaultButton} from 'office-ui-fabric-react';
+import {Label} from 'office-ui-fabric-react/lib/Label';
 import {
   getTheme,
   mergeStyleSets,
@@ -10,17 +11,19 @@ import {
   IconButton,
   IIconProps,
 } from 'office-ui-fabric-react';
+import {useState} from 'react';
 
 const cancelIcon: IIconProps = {iconName: 'Cancel'};
 
 type props = {
   modalOpen: boolean,
   openModal: (state: any) => void,
+  moveQueue: (payload: any) => boolean,
   queueName: string
 }
 
-export const MoveModal = ({modalOpen, openModal, queueName}: props) => {
-  console.log("modal state:" + modalOpen);
+export const MoveModal = ({modalOpen, openModal, queueName, moveQueue}: props) => {
+  const [toQueueName, setToQueueName] = useState("");
   // Use useId() to ensure that the IDs are unique on the page.
   // (It's also okay to use plain strings and manually ensure uniqueness.)
   const titleId = useId('title');
@@ -50,10 +53,18 @@ export const MoveModal = ({modalOpen, openModal, queueName}: props) => {
         <div className="ms-Grid " dir="ltr">
           <div className="ms-Grid-row">
             <div className="ms-Grid-col ms-sm12 ms-md12 ms-lg12">
-                <TextField label="Destination Queue" value={queueName}
-                           defaultValue="if text has error keyword ,write original queue name"/>
-                <DefaultButton style={{color: 'green', marginTop: 15,marginBottom: 15, border: '1px solid green', float: 'right'}}>Move
-                  Messages</DefaultButton>
+              From Queue: <Label style={{color: 'green'}}> {queueName}</Label>
+              <TextField label="Destination Queue" value={toQueueName} onChange={(e) => {
+                alert(e.target.value);
+                setToQueueName(e.target.value)
+              }}
+                         defaultValue="if text has error keyword ,write original queue name"/>
+              <DefaultButton
+                style={{color: 'green', marginTop: 15, marginBottom: 15, border: '1px solid green', float: 'right'}}
+                onClick={() => {
+                  moveQueue({fromQueueName:queueName,toQueueName: toQueueName})
+                }}>Move
+                Messages</DefaultButton>
 
             </div>
           </div>
@@ -69,7 +80,7 @@ const contentStyles = mergeStyleSets({
     display: 'flex',
     flexFlow: 'column nowrap',
     alignItems: 'stretch',
-    width:'45%'
+    width: '45%'
   },
   header: [
     // tslint:disable-next-line:deprecation

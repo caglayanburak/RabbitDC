@@ -16,11 +16,14 @@ type props = {
   currentVhost: string
   queues: QueueDto[]
   getQueues: any,
-  purgeQueue: (paramters: any) => boolean
+  purgeQueue: (paramters: any) => boolean,
+  moveQueue: (payload: any) => boolean,
+  deleteQueue: (payload: any) => boolean
+
 }
 
 
-export const Queues = ({currentVhost, queues, getQueues, purgeQueue}: props) => {
+export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, deleteQueue}: props) => {
   const [openModal, setOpenModal] = useState(false);
   const [dialogState, setDialogState] = useState(false);
   const [currentQueueName, setCurrentQueueName] = useState("");
@@ -83,6 +86,7 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue}: props) => 
                 setCurrentQueueName(item.name);
                 openDialog(true);
                 setDialogMessage({
+                  action: 'Purge',
                   title: "Purge Queue",
                   description: "This queue messages will permenantly delete.Are you sure?"
                 })
@@ -101,8 +105,10 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue}: props) => 
               key: 'delete',
               text: 'Delete',
               onClick: () => {
+                setCurrentQueueName(item.name);
                 openDialog(true);
                 setDialogMessage({
+                  action: 'Delete',
                   title: "Delete Queue",
                   description: "This queue messages will permenantly delete.Are you sure?"
                 })
@@ -117,9 +123,10 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue}: props) => 
 
   return (
     <ScrollablePane>
-      <MoveModal modalOpen={openModal} openModal={openMoveModal} queueName={currentQueueName}/>
-      <DialogBasicExample toggleDialog={openDialog} dialogState={dialogState} queueName={currentQueueName}
-                          dialogMessage={dialogMessage} confirmAction={purgeQueue}/>
+      <MoveModal modalOpen={openModal} openModal={openMoveModal} queueName={currentQueueName} moveQueue={moveQueue}/>
+      <DialogBasicExample toggleDialog={openDialog} dialogState={dialogState} actionParameters={currentQueueName}
+                          dialogMessage={dialogMessage}
+                          confirmAction={dialogMessage.action == 'Purge' ? purgeQueue : deleteQueue}/>
       <DetailsList
         items={queues}
         columns={_columns}

@@ -53,12 +53,13 @@ export const purgeQueue = async (queueName: string): Promise<boolean> => {
   return true;
 };
 
-export const moveQueue = async (vhost?: string, fromQueueName: string, toQueueName: string): Promise<boolean> => {
+export const moveQueue = async (fromQueueName: string, toQueueName: string): Promise<boolean> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
     return false;
   }
 
+  let vhost = getCurrentVhost();
   var payload = {
     component: "shovel",
     vhost: vhost,
@@ -81,7 +82,28 @@ export const moveQueue = async (vhost?: string, fromQueueName: string, toQueueNa
       method: 'PUT',
       data: payload,
       auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
-      url: parsedEnvironment.url + `/parameters/shovel/${vhost}/Move%20from%20${fromQueueName}`
+      url: parsedEnvironment.url + `/api/parameters/shovel/${vhost}/Move%20from%20${fromQueueName}`
+    }
+  );
+  return true;
+};
+
+export const deleteQueue = async (queueName: string): Promise<boolean> => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return false;
+  }
+
+  let vhost = getCurrentVhost();
+  var payload = {"vhost":vhost,"name":queueName,"mode":"delete"};
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  await axios(
+    {
+      method: 'DELETE',
+      data: payload,
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + `/api/queues/${vhost}/${queueName}`
     }
   );
   return true;

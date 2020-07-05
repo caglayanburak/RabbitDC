@@ -18,18 +18,18 @@ export const getHosts = async () => {
   return result;
 };
 
-export const getQueues = async (vhost?: string): Promise<QueueDto[]> => {
+export const getQueues = async (): Promise<QueueDto[]> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
     return [] as QueueDto[];
   }
-
+  let vhost = getCurrentVhost();
   const parsedEnvironment = JSON.parse(currentEnvironment);
   const result = await axios(
     {
       method: 'GET',
       auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
-      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}?page=1&page_size=100&name=&use_regex=false&pagination=true`
+      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}?page=1&page_size=100&use_regex=false&pagination=true`
     }
   );
   return result.data.items as QueueDto[];

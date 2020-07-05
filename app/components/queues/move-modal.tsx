@@ -55,7 +55,6 @@ export const MoveModal = ({modalOpen, openModal, queueName, moveQueue}: props) =
             <div className="ms-Grid-col ms-sm12 ms-md12 ms-lg12">
               From Queue: <Label style={{color: 'green'}}> {queueName}</Label>
               <TextField label="Destination Queue" value={toQueueName} onChange={(e) => {
-                alert(e.target.value);
                 setToQueueName(e.target.value)
               }}
                          defaultValue="if text has error keyword ,write original queue name"/>

@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {QueueDto} from '../../response-types/queue-dto';
 import {ScrollablePane} from 'office-ui-fabric-react/lib/ScrollablePane';
 import {initializeIcons} from 'office-ui-fabric-react/lib/Icons';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import {
   DetailsList,
   IColumn
@@ -28,17 +29,44 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
   const [dialogState, setDialogState] = useState(false);
   const [currentQueueName, setCurrentQueueName] = useState("");
   const [dialogMessage, setDialogMessage] = useState({});
+  const [cacheQueues, setCacheQueues] = useState([] as QueueDto[]);
+  const [sort, setSort] = useState({column: 'messages', isSorted: false});
+
+
   useEffect(() => {
     initializeIcons();
     getQueues(currentVhost);
   }, [currentVhost]);
 
+  useEffect(() => {
+    setCacheQueues(queues);
+  }, [queues])
+
+  const _onColumnClick = (ev: any, column: IColumn): void => {
+
+    const newColumns: IColumn[] = _columns.slice();
+    const currColumn: IColumn = newColumns.filter(currCol => column.key === currCol.key)[0];
+    setSort({column: currColumn.fieldName, isSorted: !sort.isSorted});
+    const newItems = _copyAndSort(cacheQueues, sort.column, sort.isSorted);
+    setCacheQueues(newItems);
+  }
+
   const _columns: IColumn[] = [
     {key: 'Name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true},
-    {key: 'Messages', name: 'Messages', fieldName: 'messages', minWidth: 100, maxWidth: 200, isResizable: true},
+    {
+      key: 'Messages',
+      name: 'Messages',
+      fieldName: 'messages',
+      minWidth: 100,
+      maxWidth: 200,
+      isResizable: true,
+      isSorted: true,
+      onColumnClick: _onColumnClick
+    },
     {key: 'Vhost', name: 'Vhost', fieldName: 'vhost', minWidth: 100, maxWidth: 200, isResizable: true},
     {key: 'State', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 200, isResizable: true},
-    {key: 'Consumer', name: 'Consumer', fieldName: 'consumers', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Consumer', name: 'Consumer', fieldName: 'consumers', minWidth: 100, maxWidth: 200, isResizable: true, isSorted: true,
+      onColumnClick: _onColumnClick},
     {key: 'Actions', name: 'Actions', fieldName: '', minWidth: 100, maxWidth: 200, isResizable: true},
   ];
 
@@ -67,6 +95,15 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
   const openDialog = (state: any) => {
     setDialogState(state);
   }
+
+
+  const _copyAndSort = (items: any[], columnKey: string, isSortedDescending?: boolean): any[] => {
+    return items.slice(0).sort((a: any, b: any) => ((isSortedDescending ? a[columnKey] < b[columnKey] : a[columnKey] > b[columnKey]) ? 1 : -1));
+  }
+
+const  _onChangeText = (text:string): void => {
+    setCacheQueues(text ? queues.filter(i => i.name.toLowerCase().indexOf(text) > -1): queues);
+  };
 
   const _items = (item: QueueDto): ICommandBarItemProps[] => {
 
@@ -127,8 +164,9 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
       <DialogBasicExample toggleDialog={openDialog} dialogState={dialogState} actionParameters={currentQueueName}
                           dialogMessage={dialogMessage}
                           confirmAction={dialogMessage.action == 'Purge' ? purgeQueue : deleteQueue}/>
+      <TextField label="Filter by queue:" onChange={(e)=>{_onChangeText(e.target.value)}}  style={{color: 'green', margin: 5, float: 'left'}}  />
       <DetailsList
-        items={queues}
+        items={cacheQueues}
         columns={_columns}
         onRenderItemColumn={_renderItemColumn}
       >

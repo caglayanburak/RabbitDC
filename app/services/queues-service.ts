@@ -35,6 +35,30 @@ export const getQueues = async (): Promise<QueueDto[]> => {
   return result.data.items as QueueDto[];
 };
 
+export const getQueueDetails = async (queueName: string): Promise<any[]> => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return [] as QueueDto[];
+  }
+  let vhost = getCurrentVhost();
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  const result = await axios(
+    {
+      method: 'POST',
+      data:{
+        "vhost":"ghost",
+        "name":queueName,
+        "truncate":"50000",
+        "requeue":"true",
+        "encoding":"auto",
+        "count":"1000"},
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}/${queueName}/get`
+    }
+);
+  return result.data.items as any[];
+};
+
 export const purgeQueue = async (queueName: string): Promise<boolean> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
@@ -95,7 +119,7 @@ export const deleteQueue = async (queueName: string): Promise<boolean> => {
   }
 
   let vhost = getCurrentVhost();
-  var payload = {"vhost":vhost,"name":queueName,"mode":"delete"};
+  var payload = {"vhost": vhost, "name": queueName, "mode": "delete"};
 
   const parsedEnvironment = JSON.parse(currentEnvironment);
   await axios(

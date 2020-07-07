@@ -7,6 +7,12 @@ export const getQueuesAsync = createAsyncAction(
   `GET_QUEUES_FAILED`
 )<undefined, QueueDto[], Error>();
 
+export const getQueueDetailsAsync = createAsyncAction(
+  `GET_QUEUE_DETAILS_REQUEST`,
+  `GET_QUEUE_DETAILS_SUCCESS`,
+  `GET_QUEUE_DETAILS_FAILED`
+)<undefined, any[], Error>();
+
 export const purgeQueuesAsync = createAsyncAction(
   `PURGE_QUEUE_REQUEST`,
   `PURGE_QUEUE_SUCCESS`,

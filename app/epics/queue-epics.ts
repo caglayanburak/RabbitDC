@@ -4,7 +4,7 @@ import * as actions from '../actions/queue-actions'
 
 import {from, of} from 'rxjs';
 import {catchError, filter, map, switchMap} from 'rxjs/operators';
-import {getQueues, purgeQueue, moveQueue, deleteQueue} from '../services/queues-service';
+import {getQueues, purgeQueue, moveQueue, deleteQueue, getQueueDetails} from '../services/queues-service';
 
 export const queueEpic: any = (action$: any) =>
   action$.pipe(
@@ -13,6 +13,17 @@ export const queueEpic: any = (action$: any) =>
       from(getQueues(action.payload)).pipe(
         map(result => actions.getQueuesAsync.success(result)),
         catchError(err => of(actions.getQueuesAsync.failure(err)))
+      )
+    )
+  );
+
+export const queueDetailsEpic: any = (action$: any) =>
+  action$.pipe(
+    filter(isActionOf([actions.getQueueDetailsAsync.request])),
+    switchMap((action: any) =>
+      from(getQueueDetails(action.payload)).pipe(
+        map(result => actions.getQueueDetailsAsync.success(result)),
+        catchError(err => of(actions.getQueueDetailsAsync.failure(err)))
       )
     )
   );

@@ -2,5 +2,6 @@
     "HOME": "/",
     "COUNTER": "/counter",
     "QUEUES": "/queues",
-    "EnvironmentEdit": "/environment-edit"
+    "EnvironmentEdit": "/environment-edit",
+    "QueueDetails": "/queue-details"
 }

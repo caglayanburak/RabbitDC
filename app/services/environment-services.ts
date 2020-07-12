@@ -36,6 +36,8 @@ export const getEnvironments = (): any[] => {
   let list ;
   try {
     list =  JSON.parse(localStorage.getItem("environments"));
+    if(list==null)
+      return [];
   }
   catch (e) {
     list = [];

@@ -7,6 +7,18 @@ export const getQueuesAsync = createAsyncAction(
   `GET_QUEUES_FAILED`
 )<undefined, QueueDto[], Error>();
 
+export const getNodesAsync = createAsyncAction(
+  `GET_NODES_REQUEST`,
+  `GET_NODES_SUCCESS`,
+  `GET_NODES_FAILED`
+)<undefined, any[], Error>();
+
+export const getOverviewAsync = createAsyncAction(
+  `GET_OVERVIEW_REQUEST`,
+  `GET_OVERVIEW_SUCCESS`,
+  `GET_OVERVIEW_FAILED`
+)<undefined, any, Error>();
+
 export const getQueueDetailsAsync = createAsyncAction(
   `GET_QUEUE_DETAILS_REQUEST`,
   `GET_QUEUE_DETAILS_SUCCESS`,

@@ -9,9 +9,9 @@
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 body {
     position: relative;
-    color: white;
+    color: black;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: white;
     font-family: Arial, Helvetica, Helvetica Neue, serif;
     overflow-y: hidden;
 }
@@ -42,4 +42,50 @@ a:hover {
     opacity: 1;
     text-decoration: none;
     cursor: pointer;
+}
+
+.ms-DetailsRow
+{
+  background-color: rgba(132, 130, 127, 0.72) !important;
+  color:white;
+}
+
+.ms-DetailsRow:hover
+{
+  background-color: #adabab !important;
+  color:black;
+}
+
+.is-contentUnselectable{
+  color: #fffdfd;
+  font-size: large;
+}
+.is-contentUnselectable:hover{
+  color: #ece7e7;
+}
+.ms-CommandBar{
+  background-color: transparent;
+  color:white;
+}
+.is-selected{
+  background-color: #F60 !important;
+  color: white !important;
+}
+
+.ms-Button--commandBar{
+  color:white;
+  font-weight: bold;
+  background-color: transparent;
+}
+.ms-Button--commandBar:hover{
+  color:white;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+.ms-Button-menuIcon{
+  color: white !important;
+}
+.ms-Button-menuIcon:hover{
+  background-color: transparent !important;
 }

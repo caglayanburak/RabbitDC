@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import routes from "../../constants/routes.json";
 import {Vhosts} from "../environment/vhosts";
 import {useEffect} from "react";
+const version =    require('../../package.json').version;
 
 type Props = {
   change: (payload: any) => void,
@@ -29,7 +30,7 @@ export const Header = ({change, getVhosts, vHosts, changeVhosts, currentVhost, g
           <div className="bp3-navbar-heading">
             <img  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/RabbitMQ_logo.svg/1280px-RabbitMQ_logo.svg.png" height="35" style={{marginTop:5}}/>
 
-            <Link to={routes.HOME} style={{color:'white'}}> Desktop Client
+            <Link to={routes.HOME} style={{color:'white'}}> Desktop Client {version}
             </Link>
           </div>
         </div>

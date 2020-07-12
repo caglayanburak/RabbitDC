@@ -3,5 +3,5 @@
     "COUNTER": "/counter",
     "QUEUES": "/queues",
     "EnvironmentEdit": "/environment-edit",
-    "QueueDetails": "/queue-details"
+    "QueueDetails": "/queue-details/:queue?"
 }

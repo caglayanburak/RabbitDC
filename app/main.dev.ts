@@ -9,16 +9,57 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import {app, BrowserWindow} from 'electron';
+import {autoUpdater} from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
+
+
+
+  sendStatusToWindow(text: string) {
+    log.info(text);
+    if (mainWindow) {
+      mainWindow.webContents.send('message', text);
+    }
+  };
+
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
+    setInterval(() => {
+      autoUpdater.checkForUpdatesAndNotify();
+    }, 15000)
+
+    autoUpdater.on('checking-for-update', () => {
+      this.sendStatusToWindow('Checking for update...');
+    });
+    autoUpdater.on('update-available', info => {
+      this.sendStatusToWindow('Update available.');
+    });
+    autoUpdater.on('update-not-available', info => {
+      this.sendStatusToWindow('Update not available.');
+    });
+    autoUpdater.on('error', err => {
+      this.sendStatusToWindow(`Error in auto-updater: ${err.toString()}`);
+    });
+    autoUpdater.on('download-progress', progressObj => {
+      this.sendStatusToWindow(
+        `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred} + '/' + ${progressObj.total} + )`
+      );
+    });
+    autoUpdater.on('update-downloaded', info => {
+      this.sendStatusToWindow('Update downloaded; will install now');
+    });
+
+    autoUpdater.on('update-downloaded', info => {
+      // Wait 5 seconds, then quit and install
+      // In your application, you don't need to wait 500 ms.
+      // You could call autoUpdater.quitAndInstall(); immediately
+      autoUpdater.quitAndInstall();
+    });
+
   }
 }
 
@@ -42,7 +83,7 @@ const installExtensions = async () => {
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
   return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
+    extensions.map((name) => installer.default(installer[name], forceDownload))
   ).catch(console.log);
 };
 
@@ -58,18 +99,13 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
-    webPreferences:
-      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
-        ? {
-            nodeIntegration: true
-          }
-        : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js')
-          }
+    icon: __dirname + '/icons/favicon.ico',
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
-
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {

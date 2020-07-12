@@ -8,6 +8,14 @@ export const queues = createReducer<QueueDto[], SessionActions>([])
   .handleAction(actions.getQueuesAsync.success, (state, action) => action.payload)
   .handleAction(actions.getQueuesAsync.failure, () => []);
 
+export const nodes = createReducer<any[], SessionActions>([])
+  .handleAction(actions.getNodesAsync.success, (state, action) => action.payload)
+  .handleAction(actions.getNodesAsync.failure, () => []);
+
+export const overview = createReducer<any, SessionActions>({})
+  .handleAction(actions.getOverviewAsync.success, (state, action) => action.payload)
+  .handleAction(actions.getOverviewAsync.failure, () => {});
+
 export const queueDetails = createReducer<any[], SessionActions>([])
   .handleAction(actions.getQueueDetailsAsync.success, (state, action) => action.payload)
   .handleAction(actions.getQueueDetailsAsync.failure, () => []);

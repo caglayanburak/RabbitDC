@@ -18,6 +18,40 @@ export const getHosts = async () => {
   return result;
 };
 
+export const getOverview = async () => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return {};
+  }
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  const result = await axios(
+    {
+      method: 'GET',
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + '/api/overview'
+    }
+  );
+  return result;
+};
+
+export const getNodes = async () => {
+  const currentEnvironment = localStorage.getItem('currentEnvironment');
+  if (!currentEnvironment) {
+    return [];
+  }
+
+  const parsedEnvironment = JSON.parse(currentEnvironment);
+  const result = await axios(
+    {
+      method: 'GET',
+      auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
+      url: parsedEnvironment.url + '/api/nodes'
+    }
+  );
+  return result;
+};
+
 export const getQueues = async (): Promise<QueueDto[]> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
@@ -38,9 +72,10 @@ export const getQueues = async (): Promise<QueueDto[]> => {
 export const getQueueDetails = async (queueName: string): Promise<any[]> => {
   const currentEnvironment = localStorage.getItem('currentEnvironment');
   if (!currentEnvironment) {
-    return [] as QueueDto[];
+    return [] as any[];
   }
-  let vhost = getCurrentVhost();
+
+  const vhost = getCurrentVhost();
   const parsedEnvironment = JSON.parse(currentEnvironment);
   const result = await axios(
     {
@@ -53,10 +88,10 @@ export const getQueueDetails = async (queueName: string): Promise<any[]> => {
         "encoding":"auto",
         "count":"1000"},
       auth: {username: parsedEnvironment.userName, password: parsedEnvironment.password},
-      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + vhost : ''}/${queueName}/get`
+      url: parsedEnvironment.url + `/api/queues${!!vhost ? '/' + encodeURIComponent(vhost) : ''}/${queueName}/get`
     }
 );
-  return result.data.items as any[];
+  return result.data as any[];
 };
 
 export const purgeQueue = async (queueName: string): Promise<boolean> => {

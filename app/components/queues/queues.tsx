@@ -12,7 +12,6 @@ import {FontIcon} from 'office-ui-fabric-react/lib/Icon';
 import {MoveModal} from "./move-modal";
 import {DialogBasicExample} from "./dialog";
 import { Link } from 'react-router-dom';
-import routes from "../../constants/routes.json";
 
 type props = {
   currentVhost: string
@@ -49,7 +48,7 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
   }
 
   const _columns: IColumn[] = [
-    {key: 'Name', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Name', name: 'Name', fieldName: 'name', minWidth: 400, maxWidth:700, isResizable: true},
     {
       key: 'Messages',
       name: 'Messages',
@@ -60,14 +59,14 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
       isSorted: true,
       onColumnClick: _onColumnClick
     },
-    {key: 'Vhost', name: 'Vhost', fieldName: 'vhost', minWidth: 100, maxWidth: 200, isResizable: true},
-    {key: 'State', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 200, isResizable: true},
+    {key: 'Vhost', name: 'Vhost', fieldName: 'vhost', minWidth: 100, maxWidth: 100, isResizable: true},
+    {key: 'State', name: 'State', fieldName: 'state', minWidth: 100, maxWidth: 100, isResizable: true},
     {
       key: 'Consumer',
       name: 'Consumer',
       fieldName: 'consumers',
       minWidth: 100,
-      maxWidth: 200,
+      maxWidth: 100,
       isResizable: true,
       isSorted: true,
       onColumnClick: _onColumnClick
@@ -80,7 +79,7 @@ export const Queues = ({currentVhost, queues, getQueues, purgeQueue, moveQueue, 
     const fieldContent = item[column.fieldName as keyof QueueDto] as string;
     switch (column.key) {
       case 'Messages':
-        return <Link to={routes.QueueDetails}>{fieldContent}</Link>
+        return <Link to={'/queue-details/'+item.name}>{fieldContent}</Link>
       case 'State':
         return <span><FontIcon iconName="CircleFill"
                                style={{color: fieldContent == "running" ? "#4ef04e" : "red"}}></FontIcon> {fieldContent}</span>;

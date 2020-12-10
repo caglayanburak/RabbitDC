@@ -30,7 +30,7 @@ export default class AppUpdater {
     autoUpdater.logger = log;
     setInterval(() => {
       autoUpdater.checkForUpdatesAndNotify();
-    }, 15000)
+    }, 150000)
 
     autoUpdater.on('checking-for-update', () => {
       this.sendStatusToWindow('Checking for update...');

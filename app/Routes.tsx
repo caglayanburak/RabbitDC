@@ -7,6 +7,7 @@ import EnvironmentPage from './containers/environment-page';
 import HeaderPage from './containers/header-page';
 import QueuesPage from './containers/queues-page';
 import QueueDetailsPage from './containers/queue-details-page';
+import BusinessQueuesPage from './containers/business-queues-page';
 import styled from 'styled-components';
 import {CommandBarButton} from 'office-ui-fabric-react/lib/Button';
 import {OverflowSet} from 'office-ui-fabric-react/lib/OverflowSet';
@@ -70,6 +71,9 @@ export default function Routes() {
   const queue = () => {
     history.push(routes.QUEUES)
   }
+  const businessQueue = () => {
+    history.push(routes.BusinessQueues)
+  }
 
   const environment = () => {
     history.push(routes.EnvironmentEdit)
@@ -99,6 +103,12 @@ export default function Routes() {
               },
               {
                 key: 'item3',
+                icon: 'AccountActivityIcon',
+                name: 'Business Queues',
+                onClick: businessQueue
+              },
+              {
+                key: 'item4',
                 icon: 'Settings',
                 onClick: environment,
                 name: 'Environments'
@@ -115,6 +125,7 @@ export default function Routes() {
             <Route path={routes.QUEUES} component={QueuesPage}/>
             <Route path={routes.EnvironmentEdit} sensitive component={EnvironmentPage}/>
             <Route path={routes.QueueDetails} component={QueueDetailsPage}/>
+            <Route path={routes.BusinessQueues} component={BusinessQueuesPage}/>
           </Switch>
         </RightContainer>
       </StyledContainer>
